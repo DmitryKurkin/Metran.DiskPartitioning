@@ -86,7 +86,7 @@ namespace Metran.FileSystem.Fat.FileSystemLayer
             TargetStream = targetStream;
             VolumeStaticInfo = volumeStaticInfo;
 
-            // ReSharper disable once VirtualMemberCallInConstructor
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             Format();
         }
 
@@ -96,7 +96,7 @@ namespace Metran.FileSystem.Fat.FileSystemLayer
 
             TargetStream = targetStream;
 
-            // ReSharper disable once VirtualMemberCallInConstructor
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             Load();
         }
 
@@ -215,6 +215,7 @@ namespace Metran.FileSystem.Fat.FileSystemLayer
             // actually, this is not a real dispose.
             // it was done to be able to use the file system with the using statement
 
+            // TODO: an excessive flush
             Flush();
         }
 
