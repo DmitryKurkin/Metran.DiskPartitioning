@@ -141,7 +141,6 @@ namespace Metran.FileSystemViewModel
                 _eventLogModel.AppendEvent("Trying to close the disk...");
 
                 _fileSystem.Flush();
-                _fileSystem.Dispose();
                 _fileSystem = null;
 
                 _diskStream.Dispose();
