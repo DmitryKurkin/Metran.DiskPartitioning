@@ -8,13 +8,17 @@ namespace Metran.IO.Streams
     /// </summary>
     public class ByteListPipeBuffer : IPipeBuffer
     {
+        private const long HeadLimit = 10 * 1024 * 1024;
+
         private readonly List<byte> _internalBuffer = new List<byte>();
 
         private long _totalBytesRead;
 
         private long _totalBytesFed;
 
-        int IPipeBuffer.BytesAvailable => _internalBuffer.Count;
+        private int _headIndex;
+
+        int IPipeBuffer.BytesAvailable => _internalBuffer.Count - _headIndex;
 
         long IPipeBuffer.TotalBytesRead => _totalBytesRead;
 
@@ -49,13 +53,13 @@ namespace Metran.IO.Streams
             }
 
             // copy the requested number of bytes to the dest buffer
-            _internalBuffer.CopyTo(0, buffer, offset, count);
+            _internalBuffer.CopyTo(_headIndex, buffer, offset, count);
 
-            // remove the bytes that have been just read from the internal buffer
-            _internalBuffer.RemoveRange(0, count);
-
-            // advance the reading counter by "count" bytes
+            // advance the reading counter (and the number of bytes to discard) by "count" bytes
             _totalBytesRead += count;
+            _headIndex += count;
+
+            DiscardIfNeeded();
         }
 
         void IPipeBuffer.Read(byte[] buffer)
@@ -108,6 +112,15 @@ namespace Metran.IO.Streams
         void IPipeBuffer.Reset()
         {
             _internalBuffer.Clear();
+            _headIndex = 0;
+        }
+
+        private void DiscardIfNeeded()
+        {
+            if (_headIndex < HeadLimit) return;
+
+            _internalBuffer.RemoveRange(0, _headIndex);
+            _headIndex = 0;
         }
     }
 }
