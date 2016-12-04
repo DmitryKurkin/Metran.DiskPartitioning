@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0CC4B2AC-EEB1-49A9-8664-A85ABA8CDC88}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Metran.FileSystem.Fat</RootNamespace>
+    <AssemblyName>Metran.FileSystem.Fat</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Metran.FileSystemProtectorViewWpf\ProjectConstants.cs">
+      <Link>ProjectConstants.cs</Link>
+    </Compile>
+    <Compile Include="ClusterChainLayer\ClusterChainManager.cs" />
+    <Compile Include="ClusterLayer\FileAllocationTableBase.cs" />
+    <Compile Include="ClusterLayer\FileAllocationTableFat16.cs" />
+    <Compile Include="FileSystemLayer\FileSystemFat16.cs" />
+    <Compile Include="FileSystemLayer\FileSystemFatBase.cs" />
+    <Compile Include="ClusterChainStreamLayer\ClusterChainReaderBlockDevice.cs" />
+    <Compile Include="ClusterChainStreamLayer\ClusterChainWriterBlockDevice.cs" />
+    <Compile Include="ClusterChainStreamLayer\ClusterChainStreamManager.cs" />
+    <Compile Include="ClusterLayer\FileAllocationTableFullException.cs" />
+    <Compile Include="FileSystemLayer\BiosParameterBlock.cs" />
+    <Compile Include="ClusterChainLayer\ClusterChainOverwriter.cs" />
+    <Compile Include="ClusterChainLayer\ClusterChainReader.cs" />
+    <Compile Include="ClusterChainLayer\ClusterChainWriter.cs" />
+    <Compile Include="FileSystemLayer\DirectoryFat.cs" />
+    <Compile Include="FileSystemLayer\FileFat.cs" />
+    <Compile Include="FileSystemLayer\FileSystemCorruptedException.cs" />
+    <Compile Include="FileSystemLayer\FileSystemEntityFat.cs" />
+    <Compile Include="FileSystemLayer\MaxDirectorySizeReachedException.cs" />
+    <Compile Include="ClusterLayer\NullFileSystemInformation.cs" />
+    <Compile Include="FileSystemLayer\RootDirectoryFat16.cs" />
+    <Compile Include="FileSystemLayer\RootDirectoryFat32.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="VFATLayer\CompositeDirectoryEntry.cs" />
+    <Compile Include="FileSystemLayer\ExtendedBiosParameterBlockFat32.cs" />
+    <Compile Include="ClusterLayer\FileAllocationTableFat32.cs" />
+    <Compile Include="ClusterLayer\DataRegion.cs" />
+    <Compile Include="FileSystemLayer\FileSystemFat32.cs" />
+    <Compile Include="VFATLayer\DirectoryEntryManager.cs" />
+    <Compile Include="VFATLayer\DirectoryEntryParser.cs" />
+    <Compile Include="VFATLayer\DirectoryEntryParseResult.cs" />
+    <Compile Include="VFATLayer\FatDateTime.cs" />
+    <Compile Include="ClusterLayer\FileSystemInformation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileSystemLayer\ExtendedBiosParameterBlock.cs" />
+    <Compile Include="VFATLayer\LongDirectoryEntry.cs" />
+    <Compile Include="VFATLayer\NameAlreadyExistsException.cs" />
+    <Compile Include="VFATLayer\NameCollisionException.cs" />
+    <Compile Include="VFATLayer\NameEmptyException.cs" />
+    <Compile Include="VFATLayer\NameHasIllegalCharsException.cs" />
+    <Compile Include="VFATLayer\NameTooLongException.cs" />
+    <Compile Include="VFATLayer\RootDirectoryEntry.cs" />
+    <Compile Include="VFATLayer\ShortDirectoryEntry.cs" />
+    <Compile Include="VFATLayer\VolumeLabelEntry.cs" />
+    <Compile Include="FileSystemLayer\VolumeDynamicInfo.cs" />
+    <Compile Include="FileSystemLayer\VolumeStaticInfo.cs" />
+    <Compile Include="FileSystemLayer\VolumeSizeToSectorsPerCluster.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Metran.IBlockDevice\Metran.IBlockDevice.csproj">
+      <Project>{FC5041DE-ECBB-4898-AC8A-E89A4F6D1B1B}</Project>
+      <Name>Metran.IBlockDevice</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.InputOutputBufferedStream\Metran.InputOutputBufferedStream.csproj">
+      <Project>{7385946F-97AF-43AF-BF95-DE61402EC483}</Project>
+      <Name>Metran.InputOutputBufferedStream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.ByteListPipeBuffer\Metran.ByteListPipeBuffer.csproj">
+      <Project>{50B7D574-2356-4D06-8427-B4B1E24BF653}</Project>
+      <Name>Metran.ByteListPipeBuffer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.ConstrainedStream\Metran.ConstrainedStream.csproj">
+      <Project>{BFA9CD58-2B7D-4BC2-A9F4-DB2B4758B14E}</Project>
+      <Name>Metran.ConstrainedStream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.FileSystem.Fat.Interfaces\Metran.FileSystem.Fat.Interfaces.csproj">
+      <Project>{547e1e89-95ea-4375-9ddc-96aaad0841b6}</Project>
+      <Name>Metran.FileSystem.Fat.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.FileSystem.Interfaces\Metran.FileSystem.Interfaces.csproj">
+      <Project>{E27E4177-F932-47BF-A6C7-3AB6CEACCE7E}</Project>
+      <Name>Metran.FileSystem.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.IoTrackingStream\Metran.IoTrackingStream.csproj">
+      <Project>{D803173B-F5E5-4534-AF2E-25A951CC1805}</Project>
+      <Name>Metran.IoTrackingStream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.ITrackingInfoConsumer\Metran.ITrackingInfoConsumer.csproj">
+      <Project>{FBFEB03E-13A2-460C-B733-29CD1483EEEC}</Project>
+      <Name>Metran.ITrackingInfoConsumer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.IPipeBuffer\Metran.IPipeBuffer.csproj">
+      <Project>{2145cb63-923c-4fc8-9afc-3832f9de15de}</Project>
+      <Name>Metran.IPipeBuffer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

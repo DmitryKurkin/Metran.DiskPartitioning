@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C5026390-53EA-42AA-9306-D0D7F38A9306}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Metran.FileSystemViewModel</RootNamespace>
+    <AssemblyName>Metran.FileSystemViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gets.Utils">
+      <HintPath>..\..\Gets.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Metran.LowLevelAccess, Version=1.12.0.0, Culture=neutral, PublicKeyToken=9afd1559122a4b98, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Metran.LowLevelAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Metran.FileSystemProtectorViewWpf\ProjectConstants.cs">
+      <Link>ProjectConstants.cs</Link>
+    </Compile>
+    <Compile Include="DirectoryViewModel.cs" />
+    <Compile Include="DiskContentsViewModel.cs" />
+    <Compile Include="DiskLoadingViewModel.cs" />
+    <Compile Include="DiskSelectionViewModel.cs" />
+    <Compile Include="EventLogViewModel.cs" />
+    <Compile Include="FileSystemEntityViewModel.cs" />
+    <Compile Include="FileViewModel.cs" />
+    <Compile Include="IDirectoryViewModel.cs" />
+    <Compile Include="IDiskContentsViewModel.cs" />
+    <Compile Include="IDiskLoadingViewModel.cs" />
+    <Compile Include="IDiskSelectionViewModel.cs" />
+    <Compile Include="IEventLogViewModel.cs" />
+    <Compile Include="IFileSystemEntityViewModel.cs" />
+    <Compile Include="IFileViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Metran.DiskPartitioning\Metran.DiskPartitioning.csproj">
+      <Project>{BD07E332-8B8D-41AB-B194-1365D012C29E}</Project>
+      <Name>Metran.DiskPartitioning</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.FileSystem.Fat\Metran.FileSystem.Fat.csproj">
+      <Project>{0CC4B2AC-EEB1-49A9-8664-A85ABA8CDC88}</Project>
+      <Name>Metran.FileSystem.Fat</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.FileSystem.Interfaces\Metran.FileSystem.Interfaces.csproj">
+      <Project>{E27E4177-F932-47BF-A6C7-3AB6CEACCE7E}</Project>
+      <Name>Metran.FileSystem.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metran.PhysicalDriveStream\Metran.PhysicalDriveStream.csproj">
+      <Project>{A87C1E8F-054E-4023-89C0-A49253F88BA0}</Project>
+      <Name>Metran.PhysicalDriveStream</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

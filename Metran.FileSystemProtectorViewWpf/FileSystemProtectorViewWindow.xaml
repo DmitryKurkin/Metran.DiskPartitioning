@@ -1,0 +1,55 @@
+﻿<Window x:Class="Metran.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:src="clr-namespace:Metran;assembly=Metran.FileSystemViewModel"
+        Title="File System Protector v{0}" Height="550" Width="650" MinHeight="550" MinWidth="650" Loaded="Window_Loaded" Icon="/Metran.FileSystemProtector;component/Images/smartmed.ico">
+    <Grid Name="gridMainWindow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="331*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid Name="gridSelectionAndLoading">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="314*" />
+                <ColumnDefinition Width="314*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Name="groupBoxDiskSelection" Header="Disk Selection" Margin="3,3,3,3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*" />
+                        <ColumnDefinition Width="96*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Name="comboBoxDiskList" Height="23" Margin="3,3,3,3" IsManipulationEnabled="False" />
+                    <Button Name="buttonRefresh" Content="Refresh" Height="23" Margin="3,3,3,3" Grid.Column="1" Click="buttonRefresh_Click" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Name="groupBoxDiskLoading" Header="Disk Loading" Grid.Column="1" Margin="3,3,3,3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="98*" />
+                        <ColumnDefinition Width="98*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Name="buttonDiskLoad" Content="Load" Height="23" Grid.Column="1" Margin="3,3,3,3" Click="buttonDiskLoad_Click" />
+                    <Button Name="buttonClose" Content="Close" Height="23" Grid.Column="2" Margin="3,3,3,3" Click="buttonClose_Click" />
+                    <RadioButton Name="radioButtonFat16" Content="FAT16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,6,0,0" />
+                    <RadioButton Name="radioButtonFat32" Content="FAT32" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,29,0,0" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <GroupBox Name="groupBoxDiskContents" Header="Disk Contents" Grid.Row="1" Margin="3,3,3,3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="160*" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                </Grid.RowDefinitions>
+                <TreeView Name="treeViewDiskContents" Margin="3,3,3,3" SelectedItemChanged="treeViewDiskContents_SelectedItemChanged"/>
+                <Button Name="buttonProtect" Content="Protect" Grid.Row="1" Margin="3,3,3,3" Click="buttonProtect_Click"/>
+                <Button Name="buttonUnprotect" Content="Unprotect" Grid.Row="2" Margin="3,3,3,3" Click="buttonUnprotect_Click"/>
+            </Grid>
+        </GroupBox>
+        <ListBox Name="listBoxEventLog" Grid.Row="2" Margin="3,3,3,3"/>
+    </Grid>
+</Window>
