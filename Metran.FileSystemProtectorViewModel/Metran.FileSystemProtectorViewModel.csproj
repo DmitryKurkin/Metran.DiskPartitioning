@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gets.Utils">
-      <HintPath>..\..\Gets.Utils.dll</HintPath>
+      <HintPath>..\Gets.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Metran.LowLevelAccess, Version=1.12.0.0, Culture=neutral, PublicKeyToken=9afd1559122a4b98, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
