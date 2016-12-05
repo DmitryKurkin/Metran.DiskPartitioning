@@ -91,7 +91,7 @@ namespace Metran.IO.Streams
 
             // make a subset from the source buffer to add it to the internal buffer
             var bufferSubset = new byte[count];
-            Array.Copy(buffer, offset, bufferSubset, 0, count);
+            Buffer.BlockCopy(buffer, offset, bufferSubset, 0, count);
 
             // add the subset to the internal buffer
             _internalBuffer.AddRange(bufferSubset);

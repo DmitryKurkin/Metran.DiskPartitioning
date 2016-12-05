@@ -113,6 +113,8 @@ namespace Metran.FileSystem.Fat.ClusterLayer
 
         protected override void LoadInternal(BinaryReader binReader)
         {
+            // TODO: check the implementation of FAT32
+
             // load the table
             for (var i = 0; i < RawTable.Length; i++)
             {

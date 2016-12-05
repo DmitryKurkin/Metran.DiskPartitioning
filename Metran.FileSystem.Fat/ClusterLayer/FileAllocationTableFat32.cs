@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace Metran.FileSystem.Fat.ClusterLayer
 {
@@ -86,7 +85,7 @@ namespace Metran.FileSystem.Fat.ClusterLayer
             FileSystemInfo = fileSystemInfo;
         }
 
-        public int[] RawTable { get; private set; }
+        public int[] RawTable { get; }
 
         protected override int GetTableLength()
         {
@@ -123,26 +122,30 @@ namespace Metran.FileSystem.Fat.ClusterLayer
         protected override void LoadInternal(BinaryReader binReader)
         {
             // load the table
-            //for (var i = 0; i < RawTable.Length; i++)
-            //{
-            //    RawTable[i] = binReader.ReadInt32();
-            //}
-            var tableBytes = binReader.ReadBytes(RawTable.Length*4);
-            RawTable = Enumerable
-                .Range(0, tableBytes.Length)
-                .Where(ind => ind%4 == 0)
-                .Select(ind => BitConverter.ToInt32(tableBytes, ind))
-                .ToArray();
+
+            // total number of bytes to read: 'table length' times of 'size of Int32'
+            var numberOfBytesToRead = RawTable.Length*4;
+
+            // read 'raw' bytes of RawTable
+            var tableBytes = binReader.ReadBytes(numberOfBytesToRead);
+
+            // byte[] to int[] in a single operation
+            Buffer.BlockCopy(tableBytes, 0, RawTable, 0, numberOfBytesToRead);
         }
 
         protected override void SaveInternal(BinaryWriter binWriter)
         {
             // flush the full table
-            //for (var i = 0; i < RawTable.Length; i++)
-            //{
-            //    binWriter.Write(RawTable[i]);
-            //}
-            var tableBytes = RawTable.SelectMany(BitConverter.GetBytes).ToArray();
+
+            // total number of bytes to write: 'table length' times of 'size of Int32'
+            var numberOfBytesToWrite = RawTable.Length*4;
+
+            var tableBytes = new byte[numberOfBytesToWrite];
+
+            // int[] to byte[] in a single operation
+            Buffer.BlockCopy(RawTable, 0, tableBytes, 0, numberOfBytesToWrite);
+
+            // write 'raw' bytes of RawTable
             binWriter.Write(tableBytes);
         }
     }
