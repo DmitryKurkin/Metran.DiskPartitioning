@@ -8,7 +8,7 @@
         /// <summary>
         /// The version of the product
         /// </summary>
-        public const string Version = "1.1.0.60";
+        public const string Version = "1.1.0.82";
 
         /// <summary>
         /// The name of the product

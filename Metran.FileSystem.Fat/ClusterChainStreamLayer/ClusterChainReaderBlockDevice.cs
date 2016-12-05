@@ -26,8 +26,13 @@ namespace Metran.FileSystem.Fat.ClusterChainStreamLayer
 
         bool IBlockDevice.SupportsWriting => false;
 
-        byte[] IBlockDevice.ReadBlock()
+        byte[] IBlockDevice.ReadBlock(int numberOfBlocks)
         {
+            if (numberOfBlocks != 1)
+            {
+                throw new NotSupportedException("Reading a single cluster is only supported");
+            }
+
             return _clusterChainReader.ReadNextCluster();
         }
 

@@ -19,6 +19,8 @@ namespace Metran.IO.Streams
     /// </summary>
     public class PhysicalDriveStream : Stream
     {
+        private const int BlocksMultiplier = 16;
+
         public static Stream OpenBuffered(int driveNumber, out DriveGeometry driveGeometry)
         {
             var driveStream = new PhysicalDriveStream(driveNumber);
@@ -33,7 +35,8 @@ namespace Metran.IO.Streams
 
             var bufferedStream = new InputOutputBufferedStream(
                 new PhysicalDriveStreamBlockDevice(driveStream),
-                new ByteListPipeBuffer());
+                new ByteListPipeBuffer(),
+                BlocksMultiplier);
 
             return bufferedStream;
         }

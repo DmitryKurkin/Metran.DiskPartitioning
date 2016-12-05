@@ -26,7 +26,7 @@ namespace Metran.FileSystem.Fat.ClusterChainStreamLayer
 
         bool IBlockDevice.SupportsWriting => true;
 
-        byte[] IBlockDevice.ReadBlock()
+        byte[] IBlockDevice.ReadBlock(int numberOfBlocks)
         {
             throw new NotSupportedException();
         }

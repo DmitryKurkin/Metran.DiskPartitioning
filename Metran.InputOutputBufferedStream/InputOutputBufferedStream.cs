@@ -46,17 +46,22 @@ namespace Metran.IO.Streams
 
         private readonly IPipeBuffer _pipeBuffer;
 
+        private readonly int _blocksMultiplier;
+
         private BufferedStreamState _currentState = BufferedStreamState.Initial;
 
         private bool _isClosed;
 
-        public InputOutputBufferedStream(IBlockDevice blockDevice, IPipeBuffer pipeBuffer)
+        public InputOutputBufferedStream(IBlockDevice blockDevice, IPipeBuffer pipeBuffer, int blocksMultiplier = 1)
         {
             if (blockDevice == null) throw new ArgumentNullException(nameof(blockDevice));
             if (pipeBuffer == null) throw new ArgumentNullException(nameof(pipeBuffer));
+            if (blocksMultiplier < 1)
+                throw new ArgumentOutOfRangeException(nameof(blocksMultiplier), "The multiplier must be greater than 1");
 
             _blockDevice = blockDevice;
             _pipeBuffer = pipeBuffer;
+            _blocksMultiplier = blocksMultiplier;
         }
 
         public override bool CanRead => !_isClosed && _blockDevice.SupportsReading;
@@ -184,7 +189,7 @@ namespace Metran.IO.Streams
             _pipeBuffer.Feed(buffer, offset, count);
 
             // a temp buffer used to move data between the pipe buffer and the device
-            var blockData = new byte[_blockDevice.BlockSize];
+            var blockData = new byte[_blockDevice.BlockSize*_blocksMultiplier];
 
             // write an integer number of buffered blocks to the device
             while (IsBufferedDataAvailable(blockData.Length))
@@ -235,11 +240,16 @@ namespace Metran.IO.Streams
             if (_pipeBuffer.BytesAvailable > 0)
             {
                 // yes, we do.
-                // we consider here that we have amount of buffered data that is smaller than a single block:
-                // larger amounts (larger than a single block) get flushed in the Write method
+                // now calculate the number of blocks that covers the data in the buffer
 
-                // allocate a whole block of zero bytes...
-                var blockData = new byte[_blockDevice.BlockSize];
+                var bytesToFlush = _blockDevice.BlockSize;
+                while (_pipeBuffer.BytesAvailable > bytesToFlush)
+                {
+                    bytesToFlush += _blockDevice.BlockSize;
+                }
+
+                // allocate N blocks of zero bytes...
+                var blockData = new byte[bytesToFlush];
 
                 // ...and move there the REMAINS of the buffered data (the effect is
                 // we have padded the remains of the buffered data with zeroes)
@@ -283,10 +293,10 @@ namespace Metran.IO.Streams
             int bytesFed;
             do
             {
-                // read a block from the device
-                var blockData = _blockDevice.ReadBlock();
+                // read N blocks from the device
+                var blockData = _blockDevice.ReadBlock(_blocksMultiplier);
 
-                // feed it to the buffer
+                // feed them to the buffer
                 bytesFed = _pipeBuffer.Feed(blockData);
 
                 // is data available after this iteration?

@@ -17,7 +17,7 @@
 
         long Position(long value);
 
-        byte[] ReadBlock();
+        byte[] ReadBlock(int numberOfBlocks = 1);
 
         void WriteBlock(byte[] blockData);
 

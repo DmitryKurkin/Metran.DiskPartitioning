@@ -36,11 +36,20 @@ namespace Metran.IO.Streams
             return _driveStream.Seek(value, SeekOrigin.Begin);
         }
 
-        byte[] IBlockDevice.ReadBlock()
+        byte[] IBlockDevice.ReadBlock(int numberOfBlocks)
         {
-            var sectorBytes = new byte[_driveStream.BytesPerSector];
+            if (numberOfBlocks < 1)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(numberOfBlocks),
+                    "The number of blocks must be greater than 1");
+            }
 
-            var bytesRead = _driveStream.Read(sectorBytes, 0, sectorBytes.Length);
+            var numberOfBytesToRead = _driveStream.BytesPerSector*numberOfBlocks;
+
+            var sectorBytes = new byte[numberOfBytesToRead];
+
+            var bytesRead = _driveStream.Read(sectorBytes, 0, numberOfBytesToRead);
 
             // handle a possible end of the stream
             if (bytesRead == 0)
