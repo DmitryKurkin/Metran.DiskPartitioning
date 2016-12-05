@@ -12,6 +12,8 @@ namespace Metran.FileSystem.Fat.VFATLayer
         public const int MaxNameMainPartLength = 8;
         public const int MaxNameExtensionLength = 3;
 
+        private const int CodePage = 866;
+
         private readonly byte _reserved;
 
         private byte[] _nameMainPartBytes;
@@ -161,7 +163,7 @@ namespace Metran.FileSystem.Fat.VFATLayer
 
         private string GetNameMainPart()
         {
-            var nameMainPart = Encoding.ASCII.GetString(_nameMainPartBytes);
+            var nameMainPart = Encoding.GetEncoding(CodePage).GetString(_nameMainPartBytes);
 
             return nameMainPart;
         }
@@ -169,15 +171,14 @@ namespace Metran.FileSystem.Fat.VFATLayer
         private void SetNameMainPart(string nameMainPart)
         {
             // don't forget to pad it with spaces...
-
             var spacePaddedNameMainPart = nameMainPart.PadRight(MaxNameMainPartLength);
 
-            _nameMainPartBytes = Encoding.ASCII.GetBytes(spacePaddedNameMainPart);
+            _nameMainPartBytes = Encoding.GetEncoding(CodePage).GetBytes(spacePaddedNameMainPart);
         }
 
         private string GetNameExtension()
         {
-            var extension = Encoding.ASCII.GetString(_nameExtensionBytes);
+            var extension = Encoding.GetEncoding(CodePage).GetString(_nameExtensionBytes);
 
             return extension;
         }
@@ -185,10 +186,9 @@ namespace Metran.FileSystem.Fat.VFATLayer
         private void SetNameExtension(string nameExtension)
         {
             // don't forget to pad it with spaces...
-
             var spacePaddedNameExtension = nameExtension.PadRight(MaxNameExtensionLength);
 
-            _nameExtensionBytes = Encoding.ASCII.GetBytes(spacePaddedNameExtension);
+            _nameExtensionBytes = Encoding.GetEncoding(CodePage).GetBytes(spacePaddedNameExtension);
         }
     }
 }

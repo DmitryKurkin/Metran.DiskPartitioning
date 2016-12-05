@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Metran.FileSystem.Fat.VFATLayer
 {
@@ -340,7 +341,7 @@ namespace Metran.FileSystem.Fat.VFATLayer
         {
             byte checksum = 0;
 
-            var shortName = GetShortName(false);
+            var shortName = Encoding.GetEncoding(866).GetBytes(GetShortName(false));
 
             foreach (var t in shortName)
             {
